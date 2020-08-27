@@ -1,6 +1,6 @@
-/* .hidden {
+.hidden {
     display: none;
-  } */
+  }
 
 body {
     text-align: center;
@@ -74,15 +74,28 @@ h2 {
     font-weight: bold;
 }
 
-textarea#styled {
+textarea {
 
-	border: 3px solid rgb(70, 51, 7);
+	border: 3px solid #FB2;
     padding: 5px;
     color: black
     font-family: fantasy;
     background: linear-gradient();
     background-color: #F7F4D6;
-	background-image: url("https://rlv.zcache.com/background_parchment_paper_template_poster-r2b2968dc65f245fca7adadb74d6685d8_wvg_8byvr_704.jpg");
+    background-image: url("https://cdn.hipwallpaper.com/i/2/15/czjgpO.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+text {
+
+	border: 3px solid #FB2;
+    padding: 5px;
+    color: black
+    font-family: fantasy;
+    background: linear-gradient();
+    background-color: #F7F4D6;
+	background-image: url("https://cdn.hipwallpaper.com/i/2/15/czjgpO.jpg");
 	background-position: center;
     background-repeat: no-repeat;
 }
