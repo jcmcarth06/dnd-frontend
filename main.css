@@ -1,3 +1,90 @@
-.hidden {
+/* .hidden {
     display: none;
-  }
+  } */
+
+body {
+    text-align: center;
+    background-image: url("https://i.pinimg.com/originals/dc/55/25/dc55259c7ff8bd5a1ca1dbfff4e01a73.jpg");
+    background-size: cover;
+    background-color: #085706;
+    background-attachment: fixed;
+    color: rgb(248, 227, 106);
+    font-family: fantasy;
+    text-shadow: 0px 0px 0.2em rgb(70, 51, 7);
+   }
+
+button {
+    cursor: pointer;
+    line-height: 2;
+    padding: 0;
+    position: relative;
+    font-size:1em;
+    font-family: fantasy;
+    color: rgb(248, 227, 106);
+   }
+   .fantasy span, .fantasy:after, .double:after {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+   }
+   .fantasy:after, .double:after {
+    content: "";
+    position: absolute;
+    top:0;
+    left:0;
+   }
+   .fantasy {
+    background-color: #600;
+    border-width: 0.15em;
+    border-style: outset outset outset inset;
+    border-color: #FB2;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0.09375em #000;
+   }
+   .fantasy:after {
+    box-shadow: 0px 0px 0.25em 0.25em rgba(0,0,0,0.5) inset;
+   }
+   .double {
+    position: relative;
+    border: 0.2em double #FB2;
+   }
+   .double:after {
+    box-shadow: 0px 0px 0.25em 0.2em rgba(0,0,0,0.7) inset;
+   }
+   .text {
+    display:inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+    color:#FB2;
+    
+    font-weight: bold;
+    padding: 0.5em 1.75em;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 0.15625em #FB2;
+    
+    background: linear-gradient(#B00, #A00, #B00);
+    border: 0.25em outset #A00; 
+   }
+}
+
+h2 {
+    font-weight: bold;
+}
+
+textarea#styled {
+
+	border: 3px solid rgb(70, 51, 7);
+    padding: 5px;
+    color: black
+    font-family: fantasy;
+    background: linear-gradient();
+    background-color: #F7F4D6;
+	background-image: url("https://rlv.zcache.com/background_parchment_paper_template_poster-r2b2968dc65f245fca7adadb74d6685d8_wvg_8byvr_704.jpg");
+	background-position: center;
+    background-repeat: no-repeat;
+}
+
+

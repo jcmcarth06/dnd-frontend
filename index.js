@@ -7,6 +7,9 @@ class Races {
         this.name = name;
         this.image_link = image_link
     }
+    createRace() {
+        
+    }
 }
 
 class Characters {
