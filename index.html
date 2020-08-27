@@ -21,19 +21,30 @@
                 <button class="button", id="add-wizard" type="button" name="button">Wizard</button>
                 <button class="button", id="add-race" type="button" name="button">Add a Race</button>
             </div>
-            <div id="new-race-container">
+            <div id="new-race-container" class="hidden">
                 <h2>Add a New Race:</h2>
-                <form id="new-race-form" class="hidden">
+                <form id="new-race-form">
                     <label for="race-name">Race Name</label><br>
                     <input type="text" name="race-name"><br>
                     <label for="image-link">Image Link</label><br>
                     <input type="text" name="image-link"><br><br>
                     <input id="form-submit" type="submit" value="Add Race">
                 </form>
+                <button class="button" id="return-to-select-race" name="button">Return to Menu</button>
             </div>
-            <div id="new-character-container">
+            <div id="view-all-characters-container" class="hidden">
+                <h2>Existing Characters:</h2>
+                <button class="button" id="create-character" name="button">Create a Character</button>
+                <button class="button" id="return-to-select-race" name="button">Return to Menu</button>
+            </div>
+            <div id="view-single-character-container" class="hidden">
+                <h2>Character's Name:</h2>
+                <button class="button" id="return-to-view-race" name="button">Return to Race</button>
+                <button class="button" id="return-to-select-race" name="button">Return to Menu</button>
+            </div>
+            <div id="new-character-container" class="hidden">
                 <h2>Create a Character:</h2>
-                <form id="new-character-form" class="hidden">
+                <form id="new-character-form">
                     <label for="character-name">Name</label><br>
                     <input type="text" name="character-name"><br>
                     <label for="character-age">Age</label><br>
@@ -48,6 +59,8 @@
                     <textarea type="text" name="character-background" rows="6" cols="33" placeholder="Where is your character from? What was their childhood like? What are their culture/ family like? Do they have religious/ spiritual practices? Do they have important relationships/ enemies?"></textarea><br><br>
                     <input id="form-submit" type="submit" value="Add Character">
                 </form>
+                <button class="button" id="return-to-view-race" name="button">Return to Race</button>
+                <button class="button" id="return-to-select-race" name="button">Return to Menu</button>
             </div>
         <script src="src/task.js" ></script>
         <script src="index.js" ></script>
