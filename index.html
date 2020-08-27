@@ -20,7 +20,33 @@
                 <button class="button", id="add-wizard" type="button" name="button">Wizard</button>
                 <button class="button", id="add-race" type="button" name="button">Add a Race</button>
             </div>
+        <div id="characters-container">
+        </div>
+        <div id="race-form">
+            <form id="new-race-form" class="hidden">
+                <label for="race-name">Race Name</label><br>
+                <input type="text" name="race-name"><br>
+                <label for="image-link">Image Link</label><br>
+                <input id="form-submit" type="submit" value="Add Race">
+            </form>
+        </div>
+        <div id="character-form">
+            <form id="new-character-form" class="hidden">
+                <label for="character-name">Name</label><br>
+                <input type="text" name="character-name"><br>
+                <label for="character-age">Age</label><br>
+                <input type="text" name="character-age"><br>
+                <label for="character-appearance">Appearance</label><br>
+                <input type="text" name="character-appearance"><br>
+                <label for="character-personality">Personality</label><br>
+                <input type="textarea" rows="5" cols="50" name="character-personality" placeholder="How does your character behave? How do they respond to different situations? What is their baseline attitude? What provokes them? Excites them? Calms them? Makes them sad or happy?"><br>
+                <label for="character-background">Background</label><br>
+                <input type="text" name="character-background" placeholder="Where is your character from? What was their childhood like? What are their culture/ family like? Do they have religious/ spiritual practices? Do they have important relationships/ enemies?"><br>
+                <input id="form-submit" type="submit" value="Add Character">
+            </form>
+        </div>
         <script src="src/task.js" ></script>
         <script src="index.js" ></script>
     </body>
 </html>
+
