@@ -15,7 +15,6 @@ class Races {
     }
     createRace() {
         const newRaceButton = document.createElement('div');
-        newRaceButton = 
 
     }
 }
@@ -33,4 +32,13 @@ class Characters {
         const newCharacterButtons = document.createElement('race-buttons');
 
     }
+}
+
+function getCharacters() {
+    fetch(charactersURL).then(response.json()).then(json => chreateCharacters(json.data))
+}
+
+function createCharacter(characters) {
+    characters.forEach(character => new Characters({...character.attributes}))
+    Characters.call.forEach(c => createCharacterCard())
 }
