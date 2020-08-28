@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Fantasy Characters Storyboard</title>
-        <meta name="description" content="">
+        <meta name="description" content="Public access character storyboarding application.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="main.css">
     </head>
@@ -17,17 +17,11 @@
         <h1>Fantasy Characters Storyboard</h1>
             <div id="select-race-container">
                 <h2>Pick or Create a Race:</h2>
-                <button class="fantasy", id="add-human" type="button" name="button">Human</button>
-                <button class="fantasy", id="add-halfling" type="button" name="button">Halfling</button>
-                <button class="fantasy", id="add-elf" type="button" name="button">Elf</button>
-                <button class="fantasy", id="add-goblin" type="button" name="button">Goblin</button><br><br>
-                <button class="fantasy", id="add-dark elf" type="button" name="button">Dark Elf</button>
-                <button class="fantasy", id="add-dwarf" type="button" name="button">Dwarf</button>
-                <button class="fantasy", id="add-orc" type="button" name="button">Orc</button>
-                <button class="fantasy", id="add-wizard" type="button" name="button">Wizard</button>
-                <button class="fantasy", id="add-race" type="button" name="button">Add a Race</button>
+                <div id="race-button-container">
+                    <button onclick="toggleHiddenValues('new-race-container')" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>
+                </div>
             </div>
-            <div id="new-race-container" class="hidden">
+            <div id="new-race-container">
                 <h2>Add a New Race:</h2>
                 <form id="new-race-form">
                     <label for="race-name">Race Name</label><br>
@@ -36,19 +30,20 @@
                     <input type="text" name="image-link"><br><br>
                     <input id="add-race" type="submit" value="Add Race">
                 </form>
-                <button class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
+                <button onclick="toggleHiddenValues('select-race-container')" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
             </div>
-            <div id="view-all-characters-container" class="hidden">
+            <div id="view-all-characters-container">
                 <h2>Existing Characters:</h2>
-                <button class="fantasy" id="create-character" name="button">Create a Character</button>
-                <button class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
+                <div id="character-button-container">
+                </div>
+                <button onclick="toggleHiddenValues('select-race-container')" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
             </div>
-            <div id="view-single-character-container" class="hidden">
-                <h2>Character's Name:</h2>
-                <button class="fantasy" id="return-to-view-race" name="button">Return to Race</button>
-                <button class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
+            <div id="view-single-character-container">
+                <div id="character-attributes-container"></div>
+                <button onclick="toggleHiddenValues('view-all-characters-container')"class="fantasy" id="return-to-view-race" name="button">Return to Race</button>
+                <button onclick="toggleHiddenValues('select-race-container')" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>  
             </div>
-            <div id="new-character-container" class="hidden">
+            <div id="new-character-container">
                 <h2>Create a Character:</h2>
                 <form id="new-character-form">
                     <label for="character-name">Name</label><br>
@@ -65,8 +60,8 @@
                     <textarea id="styled" type="text" name="character-background" rows="6" cols="33" placeholder="Where is your character from? What was their childhood like? What are their culture/ family like? Do they have religious/ spiritual practices? Do they have important relationships/ enemies?"></textarea><br><br>
                     <input id="add-character" type="submit" value="Add Character">
                 </form>
-                <button class="fantasy" id="return-to-view-race" name="button">Return to Race</button>
-                <button class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>
+                <button onclick="toggleHiddenValues('view-all-characters-container')"class="fantasy" id="return-to-view-race" name="button">Return to Race</button>
+                <button onclick="toggleHiddenValues('select-race-container')" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>  
             </div>
         <script src="src/task.js" ></script>
         <script src="index.js" ></script>
