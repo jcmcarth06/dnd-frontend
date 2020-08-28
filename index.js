@@ -84,18 +84,20 @@ function displayRaceContainer(raceId) {
     document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button>`
 };
 
+function clearCharacterObject() {
+    document.getElementById('character-attributes-container').innerHTML = ""
+};
+
 function displayViewSingleCharacterContainer(characterId) {
     let character = {};
+    clearCharacterObject();
     toggleHiddenValues('view-single-character-container');
-    //clear container
     fetch(charactersUrl + `/${characterId}`)
     .then((response) => response.json())
     .then((json) => {
         character = json.data
         document.getElementById('character-attributes-container').innerHTML += `<h2>${character.attributes.name}, ${character.attributes.age}</h2><p> Affiliation: "${character.attributes.affiliation}"</p><p> Appearance: "${character.attributes.appearance}"</p><p> Personality: "${character.attributes.personality}"</p><p> Background: "${character.attributes.background}"</p><img src="${character.attributes.race.image_link}"/>`
-        
     })
-
 };
 
 function getCharacters() {
@@ -121,3 +123,27 @@ function createCharacter(characters) {
     characters.forEach(character => new Characters({...character.attributes}))
     Characters.call.forEach(c => createCharacterCard())
 }
+
+function addCharacter() {
+    console.log('posting');
+    let newCharacterConfigObject = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "name": form[1].value,
+            "age": form[2].value,
+            "affiliation": form[3].value,
+            "appearance": form[4].value,
+            "personality": form[5].value,
+            "background": form[6].value
+        })
+    };
+    fetch(charactersUrl, newCharacterConfigObject)
+    .then(response => response.json())
+    .then(function(json) {
+        character.createCharacter
+    })
+};
