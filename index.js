@@ -87,18 +87,23 @@ function displayRaceContainer(raceId) {
 function displayViewSingleCharacterContainer(characterId) {
     let character = {};
     toggleHiddenValues('view-single-character-container');
-    console.log(characterId);
+    //clear container
     fetch(charactersUrl + `/${characterId}`)
     .then((response) => response.json())
     .then((json) => {
         character = json.data
-        document.getElementById('character-attributes-container').innerHTML += `<h2>${character.attributes.name}, ${character.attributes.age}</h2>`
-        document.getElementById('character-attributes-container').innerHTML += `<p> Affiliation: "${character.attributes.affiliation}"</p>`
-        document.getElementById('character-attributes-container').innerHTML += `<p> Appearance: "${character.attributes.appearance}"</p>`
-        document.getElementById('character-attributes-container').innerHTML += `<p> Personality: "${character.attributes.personality}"</p>`
-        document.getElementById('character-attributes-container').innerHTML += `<p> Background: "${character.attributes.background}"</p>`
-        document.getElementById('character-attributes-container').innerHTML += `<img src="${character.attributes.race.image_link}"/>`
+        document.getElementById('character-attributes-container').innerHTML += `<h2>${character.attributes.name}, ${character.attributes.age}</h2><p> Affiliation: "${character.attributes.affiliation}"</p><p> Appearance: "${character.attributes.appearance}"</p><p> Personality: "${character.attributes.personality}"</p><p> Background: "${character.attributes.background}"</p><img src="${character.attributes.race.image_link}"/>`
+        
     })
+
+};
+
+function getCharacters() {
+    fetch(charactersUrl)
+    .then((response) => response.json())
+    .then((json) => {
+        allRaces = json.data;
+    }).then(() => createCharacterButton());
 };
 
 function displayNewCharacterContainer(raceId) {
