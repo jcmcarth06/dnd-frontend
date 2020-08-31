@@ -1,7 +1,10 @@
+const raceApi = new RaceApi();
+const characterApi = new CharacterApi();
 // document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
 document.addEventListener('DOMContentLoaded', () => {
-    getRaces();
-    toggleHiddenValues('select-race-container');
+    raceApi.getAllRaces()
+    .then(() => characterApi.getAllCharacters())
+    .then(() => returnToHomeScreen());
 });
 
 const racesUrl = "http://localhost:3000/races"
@@ -15,6 +18,9 @@ const containers = ["select-race-container", "new-race-container", "view-all-cha
 let currentRace;
 let currentCharacter;
 
+let races = [];
+let characters = [];
+
 function toggleHiddenValues(currentScreen) {
     containers.forEach((container) => {
         if(container === currentScreen) {
@@ -25,44 +31,16 @@ function toggleHiddenValues(currentScreen) {
     })
 };
 
-let allRaces = []
-
-class Races {
-    constructor(name, image_link) {
-        this.name = name;
-        this.image_link = image_link
-    }
-};
-
-class Characters {
-    constructor(name, age, appearance, personality, background, affiliation) {
-        this.name = name;
-        this.age = age;
-        this.appearance = appearance;
-        this.personality = personality;
-        this.background = background;
-        this.affiliation = affiliation
-    }
-};
-
-function getRaces() {
-    document.getElementById('race-button-container').innerHTML = ""
-    fetch(racesUrl)
-    .then((response) => response.json())
-    .then((json) => {
-        allRaces = json.data;
-    }).then(() => createRaceButtons());
-};
-
 function returnToHomeScreen() {
     toggleHiddenValues('select-race-container')
-    getRaces();
+    createRaceButtons();
 };
 
 function createRaceButtons() {
+    document.getElementById('race-button-container').innerHTML = ""
     document.getElementById('race-button-container').innerHTML += `<button onclick="displayNewRaceContainer()" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>`
-    allRaces.forEach((race) => {
-        document.getElementById('race-button-container').innerHTML += `<button onclick="displayRaceContainer(${race.id})" class="fantasy" id=${race.id}>` + race.attributes.name + '</button>';
+    Race.all.forEach((race) => {
+        document.getElementById('race-button-container').innerHTML += `<button onclick="displayRaceContainer(${race.id})" class="fantasy" id=${race.id}>` + race.name + '</button>';
     })
 };
 
@@ -72,26 +50,17 @@ function clearRaceObjects() {
 
 function displayRaceContainer(raceId) {
     currentRace = raceId;
-    const allCharactersByRace = [];
     clearRaceObjects();
+    const allCharactersByRace = Character.findByRaceId(raceId);
     toggleHiddenValues('view-all-characters-container');
-    fetch(charactersUrl)
-    .then((response) => response.json())
-    .then((json) => {
-        json.data.forEach((character) => {
-            if(character.attributes.race.id === raceId) {
-                allCharactersByRace.push(character)
-                document.getElementById('character-button-container').innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.attributes.name + '</button>';
-            }
-        })
+    allCharactersByRace.forEach((character) => {
+            document.getElementById('character-button-container').innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.name + '</button>';
     })
-    .then(() => {
-        if(allCharactersByRace.length === 0) {
-            document.getElementById('character-button-container').innerHTML += "<h2>There are currently no characters of this race.</h2>"
-        }
-    }).then(() => {
-        document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button>`
-    })
+    if(allCharactersByRace.length === 0) {
+        document.getElementById('character-button-container').innerHTML += "<h2>There are currently no characters of this race.</h2>"
+    }
+    document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button>`
+    document.getElementById('character-button-container').innerHTML += `<button onclick="returnToHomeScreen()" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
 };
 
 function clearCharacterObject() {
@@ -102,26 +71,14 @@ function clearCharacterObject() {
 function displayViewSingleCharacterContainer(characterId, raceId) {
     let currentRace = raceId;
     let currentCharacter = characterId;
-    let character = {};
+    let character = Character.findById(characterId);
+    let raceById = Race.findById(raceId);
+
     clearCharacterObject();
     toggleHiddenValues('view-single-character-container');
-    fetch(charactersUrl + `/${characterId}`)
-    .then((response) => response.json())
-    .then((json) => {
-        character = json.data
-        document.getElementById('character-attributes-container').innerHTML += `<h2>${character.attributes.name}, ${character.attributes.age}</h2><p> Affiliation: "${character.attributes.affiliation}"</p><p> Appearance: "${character.attributes.appearance}"</p><p> Personality: "${character.attributes.personality}"</p><p> Background: "${character.attributes.background}"</p><img src="${character.attributes.race.image_link}"/>`
-        document.getElementById('character-attributes-container').innerHTML += `<button onclick="deleteCharacter(${currentCharacter})" class="fantasy" id="delete-character" name="button">Claim Character</button>`
-        document.getElementById('character-attributes-container').innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
-
-    })
-};
-
-function getCharacters() {
-    fetch(charactersUrl)
-    .then((response) => response.json())
-    .then((json) => {
-        allRaces = json.data;
-    }).then(() => createCharacterButton());
+    document.getElementById('character-attributes-container').innerHTML += `<h2>${character.name}, ${character.age}</h2><p> Affiliation: "${character.affiliation}"</p><p> Appearance: "${character.appearance}"</p><p> Personality: "${character.personality}"</p><p> Background: "${character.background}"</p><img src="${raceById.image_link}"/>`
+    document.getElementById('character-attributes-container').innerHTML += `<button onclick="deleteCharacter(${currentCharacter})" class="fantasy" id="delete-character" name="button">Claim Character</button>`
+    document.getElementById('character-attributes-container').innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
 };
 
 function displayNewCharacterContainer(raceId) {
@@ -156,10 +113,9 @@ function addCharacter() {
             "affiliation": newCharacterAffiliation
         })
     };
-    fetch(charactersUrl, newCharacterConfigObject)
-    .then(response => response.json())
-    .then(function(json) {
-        displayViewSingleCharacterContainer(json.data.id)
+    characterApi.createCharacter(newCharacterConfigObject)
+    .then((id) => {
+        displayViewSingleCharacterContainer(id, currentRace)
     })
 };
 
@@ -177,10 +133,9 @@ function addRace() {
             "image_link": imageLink, 
         })
     };
-    fetch(racesUrl, newRaceConfigObject)
-    .then(response => response.json())
-    .then(function(json) {
-        displayRaceContainer(json.data.id)
+    raceApi.createRace(newRaceConfigObject)
+    .then((data) => {
+        displayRaceContainer(data);
     });
 };
 
@@ -190,20 +145,13 @@ function displayNewRaceContainer() {
 };
 
 async function deleteCharacter(id) {
+    console.log(currentRace);
     const verification = await deletePrompt();
 
     if (verification){
-        let configObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        }
-        fetch(charactersUrl + `/${id}`, configObj)
-            .then(() => {
-                displayRaceContainer(currentRace);
-            });
+        characterApi.deleteCharacter(id)
+        .then(() => characterApi.getAllCharacters())
+        .then(() => displayRaceContainer(currentRace))
     }
     return;
 };
@@ -215,4 +163,4 @@ function deletePrompt() {
     } else {
         return false;
     }
-}
+};
