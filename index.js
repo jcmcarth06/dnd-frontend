@@ -1,25 +1,18 @@
 const raceApi = new RaceApi();
 const characterApi = new CharacterApi();
+const containers = ["select-race-container", "new-race-container", "view-all-characters-container", "view-single-character-container", "new-character-container"]
+let currentRace;
+let currentCharacter;
+let races = [];
+let characters = [];
+
 // document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
+
 document.addEventListener('DOMContentLoaded', () => {
     raceApi.getAllRaces()
     .then(() => characterApi.getAllCharacters())
     .then(() => returnToHomeScreen());
 });
-
-const racesUrl = "http://localhost:3000/races"
-const charactersUrl = "http://localhost:3000/characters"
-const returnToRacesButton = document.getElementById("return-to-select-race")
-const returnToRaceButton = document.getElementById("return-to-view-race")
-const CreateCharacterButton = document.getElementById("create-character")
-const addCharacterButton = document.getElementById("add-character")
-const addRaceButton = document.getElementById("add-race")
-const containers = ["select-race-container", "new-race-container", "view-all-characters-container", "view-single-character-container", "new-character-container"]
-let currentRace;
-let currentCharacter;
-
-let races = [];
-let characters = [];
 
 function toggleHiddenValues(currentScreen) {
     containers.forEach((container) => {
@@ -145,7 +138,6 @@ function displayNewRaceContainer() {
 };
 
 async function deleteCharacter(id) {
-    console.log(currentRace);
     const verification = await deletePrompt();
 
     if (verification){
