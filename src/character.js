@@ -1,4 +1,5 @@
 class Character {
+    
     static all = [];
 
     static findByRaceId = function(id){

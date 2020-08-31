@@ -3,7 +3,7 @@ class CharacterApi {
         this.baseUrl = "http://localhost:3000/characters";
     }
     getAllCharacters() {
-        return fetch(charactersUrl)
+        return fetch(this.baseUrl)
         .then((response) => response.json())
         .then((json) => {
             json.data.forEach((character) => {
@@ -22,7 +22,7 @@ class CharacterApi {
     }
 
     createCharacter(config) {
-        return fetch(charactersUrl, config)
+        return fetch(this.baseUrl, config)
         .then(response => response.json())
         .then((json) => {
             new Character(
@@ -47,6 +47,6 @@ class CharacterApi {
                 "Accept": "application/json"
             }
         }
-        return fetch(charactersUrl + `/${id}`, configObj)
+        return fetch(this.baseUrl + `/${id}`, configObj)
     }
 }
