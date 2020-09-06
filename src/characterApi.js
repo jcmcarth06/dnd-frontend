@@ -19,7 +19,7 @@ class CharacterApi {
                 );
             })
         });
-    }
+    };
 
     createCharacter(config) {
         return fetch(this.baseUrl, config)
@@ -37,16 +37,21 @@ class CharacterApi {
             )
             return json.data.id;
         })
-    }
+    };
 
     deleteCharacter(id) {
+        document.getElementById(`${id}`).remove();
+        const characterIndex = Character.all.findIndex(x => parseInt(x.id) === id);
+
         let configObj = {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             }
-        }
+        };
+        
         return fetch(this.baseUrl + `/${id}`, configObj)
-    }
-}
+        .then(() => Character.all.splice(characterIndex, 1));
+    };
+};

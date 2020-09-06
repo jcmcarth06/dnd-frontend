@@ -8,9 +8,9 @@ class RaceApi {
         .then((json) => {
             json.data.forEach((race) => {
                 new Race(race.id, race.attributes.name, race.attributes.image_link);
-            })
+            });
         });
-    }
+    };
 
     createRace(config) {
         return fetch(this.baseUrl, config)
@@ -19,5 +19,5 @@ class RaceApi {
             new Race(json.data.id, json.data.attributes.name, json.data.attributes.image_link);
             return json.data.id;
         });
-    }
-}
+    };
+};

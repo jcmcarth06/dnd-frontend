@@ -1,18 +1,28 @@
 const raceApi = new RaceApi();
 const characterApi = new CharacterApi();
 const containers = ["select-race-container", "new-race-container", "view-all-characters-container", "view-single-character-container", "new-character-container"]
+const searchForm = document.getElementById("search-form");
 let currentRace;
 let currentCharacter;
 let races = [];
 let characters = [];
 
-// document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
+// searchForm.addEventListener("submit", handleSearch)
+
+document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
 
 document.addEventListener('DOMContentLoaded', () => {
     raceApi.getAllRaces()
     .then(() => characterApi.getAllCharacters())
     .then(() => returnToHomeScreen());
 });
+
+// function handleSearch(e) {
+//     e.preventDefault()
+//     character
+
+
+// }
 
 function toggleHiddenValues(currentScreen) {
     containers.forEach((container) => {
@@ -44,16 +54,15 @@ function clearRaceObjects() {
 function displayRaceContainer(raceId) {
     currentRace = raceId;
     clearRaceObjects();
-    const allCharactersByRace = Character.findByRaceId(raceId);
+    // const allCharactersByRace = Character.findByRaceId(raceId);
     toggleHiddenValues('view-all-characters-container');
-    allCharactersByRace.forEach((character) => {
+    Character.findByRaceId(raceId).forEach((character) => {
             document.getElementById('character-button-container').innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.name + '</button>';
     })
-    if(allCharactersByRace.length === 0) {
+    if(Character.findByRaceId(raceId).length === 0) {
         document.getElementById('character-button-container').innerHTML += "<h2>There are currently no characters of this race.</h2>"
     }
-    document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button>`
-    document.getElementById('character-button-container').innerHTML += `<button onclick="returnToHomeScreen()" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
+    document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button><button onclick="returnToHomeScreen()" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
 };
 
 function clearCharacterObject() {
@@ -64,13 +73,12 @@ function clearCharacterObject() {
 function displayViewSingleCharacterContainer(characterId, raceId) {
     let currentRace = raceId;
     let currentCharacter = characterId;
-    let character = Character.findById(characterId);
+    let character = Character.findById(characterId); // once i find the character,be able to call character.render
     let raceById = Race.findById(raceId);
 
     clearCharacterObject();
     toggleHiddenValues('view-single-character-container');
-    document.getElementById('character-attributes-container').innerHTML += `<h2>${character.name}, ${character.age}</h2><p> Affiliation: "${character.affiliation}"</p><p> Appearance: "${character.appearance}"</p><p> Personality: "${character.personality}"</p><p> Background: "${character.background}"</p><img src="${raceById.image_link}"/>`
-    document.getElementById('character-attributes-container').innerHTML += `<button onclick="deleteCharacter(${currentCharacter})" class="fantasy" id="delete-character" name="button">Claim Character</button>`
+    character.renderCharacter();
     document.getElementById('character-attributes-container').innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
 };
 
@@ -139,10 +147,8 @@ function displayNewRaceContainer() {
 
 async function deleteCharacter(id) {
     const verification = await deletePrompt();
-
     if (verification){
         characterApi.deleteCharacter(id)
-        .then(() => characterApi.getAllCharacters())
         .then(() => displayRaceContainer(currentRace))
     }
     return;
