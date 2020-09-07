@@ -1,7 +1,7 @@
 # dnd-frontend
-Fantast Characters Storyboard!
+Fantasy Characters Storyboard!
 
-Welcome to the fantasy characters storyboard. This is a public access app where any user can, view and create different fantasy races to build a database of characters within those races for themselves and for other users to view for storyboarding purposes-- whether it be for DnD, writing, gaming, etc. all characters entered into the database are claimable by any user for their own putposes. This tool is used to share creative inspiration for fantasy creators.
+Welcome to the Fantasy Characters Storyboard. This is a public access app where any user can, view and create different fantasy races to build a database of characters within those races for themselves and for other users to view for storyboarding purposes-- whether it be for DnD, writing, gaming, etc. all characters entered into the database are claimable by any user for their own putposes. This tool is used to share creative inspiration for fantasy creators.
 
 Installation To install this program, clone the repository from https://github.com/jcmcarth06/dnd-frontend, then run 'bundle install' in the terminal.
 

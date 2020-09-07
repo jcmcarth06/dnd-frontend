@@ -50,7 +50,6 @@ class CharacterApi {
                 "Accept": "application/json"
             }
         };
-        
         return fetch(this.baseUrl + `/${id}`, configObj)
         .then(() => Character.all.splice(characterIndex, 1));
     };

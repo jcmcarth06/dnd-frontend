@@ -1,10 +1,16 @@
 const raceApi = new RaceApi();
 const characterApi = new CharacterApi();
 const containers = ["select-race-container", "new-race-container", "view-all-characters-container", "view-single-character-container", "new-character-container"]
+const newRaceButton = document.getElementById('new-race-buttons')
+const newCharacterButton = document.getElementById('new-character-buttons')
+const raceButtonContainer = document.getElementById('race-button-container')
+const characterButtonContainer = document.getElementById('character-button-container')
+const newRaceButtonContainer = document.getElementById('new-race-button-container')
+const characterAttributesContainer = document.getElementById('character-attributes-container')
+const races = [];
+const characters = [];
 let currentRace;
 let currentCharacter;
-let races = [];
-let characters = [];
 
 document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
 
@@ -30,36 +36,36 @@ function returnToHomeScreen() {
 };
 
 function createRaceButtons() {
-    document.getElementById('race-button-container').innerHTML = ""
-    document.getElementById('new-race-button-container').innerHTML = ""
-    document.getElementById('new-race-button-container').innerHTML += `<button onclick="displayNewRaceContainer()" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>`
-    Race.all.forEach((race) => {
-        document.getElementById('race-button-container').innerHTML += `<button onclick="displayRaceContainer(${race.id})" class="fantasy" id=${race.id}>` + race.name + '</button>';
+    let currentRace = Race.all.slice();
+    raceButtonContainer.innerHTML = ""
+    newRaceButtonContainer.innerHTML = ""
+    newRaceButtonContainer.innerHTML += `<button onclick="displayNewRaceContainer()" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>`
+    const reverseAlphabetize = currentRace.sort((a, b) => (a.name < b.name) ? 1 : -1);
+    reverseAlphabetize.all.forEach((race) => {
+        raceButtonContainer.innerHTML += `<button onclick="displayRaceContainer(${race.id})" class="fantasy" id=${race.id}>` + race.name + '</button>';
     })
 };
 
 function clearRaceObjects() {
-    document.getElementById('character-button-container').innerHTML = ""
+    characterButtonContainer.innerHTML = ""
 };
 
 function displayRaceContainer(raceId) {
     currentRace = raceId;
-    // let newRaceButtonContainer = document.getElementById('new-race-buttons');
     clearRaceObjects();
     toggleHiddenValues('view-all-characters-container');
-    // newRaceButtonContainer.childNodes.remove();
     Character.findByRaceId(raceId).forEach((character) => {
-            document.getElementById('character-button-container').innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.name + '</button>';
+            characterButtonContainer.innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.name + '</button>';
     })
     if(Character.findByRaceId(raceId).length === 0) {
-        document.getElementById('character-button-container').innerHTML += "<h2>There are currently no characters of this race.</h2>"
+        characterButtonContainer.innerHTML += "<h2>There are currently no characters of this race.</h2>"
     }
-    document.getElementById('character-button-container').innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button><button onclick="returnToHomeScreen()" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
+    characterButtonContainer.innerHTML += `<button class="fantasy" onclick="displayNewCharacterContainer(${raceId})" id="create-character" name="button">Create a Character</button><button onclick="returnToHomeScreen()" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
 };
 
 function clearCharacterObject() {
-    document.getElementById('character-attributes-container').innerHTML = ""
-    document.getElementById('new-character-buttons').innerHTML = ""
+    characterAttributesContainer.innerHTML = ""
+    newCharacterButton.innerHTML = ""
 };
 
 function displayViewSingleCharacterContainer(characterId, raceId) {
@@ -71,16 +77,16 @@ function displayViewSingleCharacterContainer(characterId, raceId) {
     clearCharacterObject();
     toggleHiddenValues('view-single-character-container');
     character.renderCharacter();
-    document.getElementById('character-attributes-container').innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
+    characterAttributesContainer.innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
 };
 
 function displayNewCharacterContainer(raceId) {
     clearCharacterObject();
     toggleHiddenValues('new-character-container');
     currentRace = raceId;
-    document.getElementById('new-character-buttons').innerHTML += `<button onclick="addCharacter()" class="fantasy" id="add-character" value="Add Character">Add Character</button>                
+    newCharacterButton.innerHTML += `<button onclick="addCharacter()" class="fantasy" id="add-character" value="Add Character">Add Character</button>                
     <button onclick="toggleHiddenValues('select-race-container')" class="fantasy" id="return-to-select-race" name="button">Return to Menu</button>`
-    document.getElementById('new-character-buttons').innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
+    newCharacterButton.innerHTML += `<button onclick="displayRaceContainer(${currentRace})" class="fantasy" id="return-to-view-race" name="button">Return to Race</button>`
 };
 
 function addCharacter() {
@@ -134,8 +140,8 @@ function addRace() {
 
 function displayNewRaceContainer() {
     toggleHiddenValues('new-race-container');
-    document.getElementById('new-race-buttons').innerHTML = "";
-    document.getElementById('new-race-buttons').innerHTML += `<button onclick="addRace()" class="fantasy" id="add-race" value="Add Race">Add Race</button>`
+    newRaceButton.innerHTML = "";
+    newRaceButton.innerHTML += `<button onclick="addRace()" class="fantasy" id="add-race" value="Add Race">Add Race</button>`
 };
 
 async function deleteCharacter(id) {
