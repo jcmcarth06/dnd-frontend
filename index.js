@@ -14,12 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(() => returnToHomeScreen());
 });
 
-function addCharactersToDom(characterArray) {
-    for (character of characterArray) {
-      character.createCharacter()
-    }
-};
-
 function toggleHiddenValues(currentScreen) {
     containers.forEach((container) => {
         if(container === currentScreen) {
@@ -50,9 +44,10 @@ function clearRaceObjects() {
 
 function displayRaceContainer(raceId) {
     currentRace = raceId;
+    // let newRaceButtonContainer = document.getElementById('new-race-buttons');
     clearRaceObjects();
-    // const allCharactersByRace = Character.findByRaceId(raceId);
     toggleHiddenValues('view-all-characters-container');
+    // newRaceButtonContainer.childNodes.remove();
     Character.findByRaceId(raceId).forEach((character) => {
             document.getElementById('character-button-container').innerHTML += `<button onclick="displayViewSingleCharacterContainer(${character.id}, ${currentRace})" class="fantasy" id=${character.id}>` + character.name + '</button>';
     })
@@ -139,6 +134,7 @@ function addRace() {
 
 function displayNewRaceContainer() {
     toggleHiddenValues('new-race-container');
+    document.getElementById('new-race-buttons').innerHTML = "";
     document.getElementById('new-race-buttons').innerHTML += `<button onclick="addRace()" class="fantasy" id="add-race" value="Add Race">Add Race</button>`
 };
 
