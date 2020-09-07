@@ -25,7 +25,7 @@ class Character {
 
     //add a function to return race (make it a get method) in order to call on it in image source (this.race.image_link)
     renderCharacter() {
-        document.getElementById('character-attributes-container').innerHTML += `<h2>${this.name},${this.age}</h2>
+        document.getElementById('character-attributes-container').innerHTML += `<h2>${this.name}, ${this.age}</h2>
         <p> Affiliation: "${this.affiliation}"</p>
         <p> Appearance: "${this.appearance}"</p>
         <p> Personality: "${this.personality}"</p>
