@@ -1,13 +1,10 @@
 const raceApi = new RaceApi();
 const characterApi = new CharacterApi();
 const containers = ["select-race-container", "new-race-container", "view-all-characters-container", "view-single-character-container", "new-character-container"]
-const searchForm = document.getElementById("search-form");
 let currentRace;
 let currentCharacter;
 let races = [];
 let characters = [];
-
-// searchForm.addEventListener("submit", handleSearch)
 
 document.addEventListener('DOMContentLoaded', () => alert('Welcome to the Fantasy Characters Storyboard! Use this resource to create, catalog, and share fantasy characters for public access to use in storytelling! Remember: any character you catalog is free to access for other writers, and any character someone else catalogs is up for grabs for use and/or inspiration!'))
 
@@ -17,12 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(() => returnToHomeScreen());
 });
 
-// function handleSearch(e) {
-//     e.preventDefault()
-//     character
-
-
-// }
+function addCharactersToDom(characterArray) {
+    for (character of characterArray) {
+      character.createCharacter()
+    }
+};
 
 function toggleHiddenValues(currentScreen) {
     containers.forEach((container) => {
@@ -41,7 +37,8 @@ function returnToHomeScreen() {
 
 function createRaceButtons() {
     document.getElementById('race-button-container').innerHTML = ""
-    document.getElementById('race-button-container').innerHTML += `<button onclick="displayNewRaceContainer()" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>`
+    document.getElementById('new-race-button-container').innerHTML = ""
+    document.getElementById('new-race-button-container').innerHTML += `<button onclick="displayNewRaceContainer()" class="fantasy" id="add-race" type="button" name="button">Add a Race</button>`
     Race.all.forEach((race) => {
         document.getElementById('race-button-container').innerHTML += `<button onclick="displayRaceContainer(${race.id})" class="fantasy" id=${race.id}>` + race.name + '</button>';
     })
@@ -73,7 +70,7 @@ function clearCharacterObject() {
 function displayViewSingleCharacterContainer(characterId, raceId) {
     let currentRace = raceId;
     let currentCharacter = characterId;
-    let character = Character.findById(characterId); // once i find the character,be able to call character.render
+    let character = Character.findById(characterId);
     let raceById = Race.findById(raceId);
 
     clearCharacterObject();
